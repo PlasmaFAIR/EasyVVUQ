@@ -542,7 +542,7 @@ class SSCSampler(BaseSamplingElement, sampler_name="ssc_sampler"):
         n_e = self.tri.nsimplex
         # if the overlap between element i and S_j = n_xi + 1, element i
         # is in S_j
-        idx = [np.in1d(self.tri.simplices[i], S_j).nonzero()[0].size for i in range(n_e)]
+        idx = [np.isin(self.tri.simplices[i], S_j).nonzero()[0].size for i in range(n_e)]
         idx = (np.array(idx) == self.n_xi + 1).nonzero()[0]
 
         return idx
@@ -832,7 +832,7 @@ class SSCSampler(BaseSamplingElement, sampler_name="ssc_sampler"):
 
         for i in all_with_pj_gt_1:
             # found a candidate stencil S_ji
-            if np.in1d(j, el_idx[i]):
+            if np.isin(j, el_idx[i]):
                 # the candidate stencil has a higher polynomial degree: accept
                 if p_j[i] > p_j_new:
                     ENO_S_j = np.copy(S_j[i, :])
